@@ -12,15 +12,20 @@ import javafx.fxml.Initializable;
 
 public class CustomerAccountsController implements Initializable {
 
+    // Text fields
     @FXML
-    private TextField customerIdField, nameField, phoneField, emailField, numberOfAccountsField, accountIdField, accountTypeField, depositField, withdrawField;
+    private TextField customerIdField, nameField, phoneField, emailField, numberOfAccountsField, accountIdField,
+            accountTypeField, depositField, withdrawField;
 
+    // Text areas
     @FXML
     private TextArea accountDetailsArea, messagesArea;
 
+    // Buttons
     @FXML
     private Button clearButton, exitButton, depositButton, withdrawButton, nextButton, previousButton;
 
+    // Initialization
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         accountDetailsArea.setEditable(false);
@@ -30,6 +35,7 @@ public class CustomerAccountsController implements Initializable {
         withdrawField.setPromptText("amount");
     }
 
+    // Clear button handler
     @FXML
     private void handleClearButton() {
         customerIdField.clear();
@@ -37,25 +43,27 @@ public class CustomerAccountsController implements Initializable {
         phoneField.clear();
         emailField.clear();
         numberOfAccountsField.clear();
-        
+
         accountIdField.clear();
         accountTypeField.clear();
         accountDetailsArea.clear();
-        
+
         messagesArea.clear();
-        
+
         depositField.clear();
         withdrawField.clear();
 
         withdrawButton.setDisable(false);
     }
 
+    // Exit button handler
     @FXML
     private void handleExitButton() {
         Stage stage = (Stage) exitButton.getScene().getWindow();
         stage.close();
     }
 
+    // Button click handler to display corresponding button clicked text
     @FXML
     private void handleButtonClicked() {
         Button clickedButton = (Button) exitButton.getScene().getFocusOwner();

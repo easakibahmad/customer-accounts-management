@@ -14,6 +14,9 @@ public class App extends Application {
 
     @Override
     public void start(Stage stage) throws IOException {
+
+        // Use the customer-accounts.fxml file for the scene.
+        // Set the screen size to 808 width and 695 height.
         scene = new Scene(loadFXML("CustomerAccounts"), 808, 695);
         stage.setScene(scene);
         stage.show();
