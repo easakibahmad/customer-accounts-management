@@ -8,11 +8,9 @@ public class DailyAccessAccount extends Account {
 
     // Constructor
 
-    public DailyAccessAccount(double balance, double minimum, double interestEarned, String acctID, String custID, String type, double rate) {
-        super(acctID, custID, type, rate);
+    public DailyAccessAccount(String id, String custId, double rate, double balance) {
+        super(id, custId, "DailyAccessAccount", rate);
         this.balance = balance;
-        this.minimum = minimum;
-        this.interestEarned = interestEarned;
     }
 
     // Dummy implementation of getAccountDetails() method

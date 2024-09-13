@@ -7,14 +7,10 @@ public class GoalSaverAccount extends Account {
     private double interestEarned;
 
     // Constructor
-    public GoalSaverAccount(double balance, double startOfMonthBalance, double interestEarned, String acctID, String custID, String type, double rate) {
-        super(acctID, custID, type, rate);
+    public GoalSaverAccount(String id, String custId, double rate, double balance) {
+        super(id, custId, "GoalSaverAccount", rate);  // Call the constructor of the superclass (Account)
         this.balance = balance;
-        this.startOfMonthBalance = startOfMonthBalance;
-        this.interestEarned = interestEarned;
     }
-
-
 
     // Dummy implementation of getAccountDetails() method
     @Override

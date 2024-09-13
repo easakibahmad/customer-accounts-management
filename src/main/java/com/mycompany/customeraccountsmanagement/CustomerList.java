@@ -1,49 +1,53 @@
 package com.mycompany.customeraccountsmanagement;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 
 public class CustomerList {
-    // HashMaps to store customer and account objects
+    // HashMaps to store customers and account objects
     private HashMap<String, Customer> customers = new HashMap<>();
     private HashMap<String, Account> accounts = new HashMap<>();
 
-    // Method to load customer and account data (Appendix A data)
+    // Method to load customer and account data (based on Appendix A)
     public void loadCustomerData() {
-        // Creating an empty ArrayList to store accounts for each customer
+        // Create three customers
+        Customer cust1 = new Customer("C0001", "John Smith", "0412345678", "j.smith@cqumail.com");
+        Customer cust2 = new Customer("C0002", "Mary Brown", "0412456789", "m.brown@cqumail.com");
+        Customer cust3 = new Customer("C0003", "Peter Green", "0412567890", "p.green@cqumail.com");
 
-        // Customer 1 with two accounts
-        ArrayList<Account> accounts1 = new ArrayList<>();
-        Customer cust1 = new Customer("C001", "John Doe", "0412345678", "johndoe@example.com", 0, accounts1);
-        Account acc1 = new DailyAccessAccount("A001", "C001", "Daily Access", 0.02, 1000.0);
-        Account acc2 = new GoalSaverAccount("A002", "C001", "Goal Saver", 0.05, 5000.0);
-        cust1.addAccount(acc1);
-        cust1.addAccount(acc2);
-        customers.put(cust1.getCustomerID(), cust1);
-        accounts.put(acc1.getAccountID(), acc1);
-        accounts.put(acc2.getAccountID(), acc2);
+        // Add them to the HashMap of customers
+        customers.put("C0001", cust1);
+        customers.put("C0002", cust2);
+        customers.put("C0003", cust3);
 
-        // Customer 2 with two accounts
-        ArrayList<Account> accounts2 = new ArrayList<>();
-        Customer cust2 = new Customer("C002", "Jane Smith", "0412345679", "janesmith@example.com", 0, accounts2);
-        Account acc3 = new HomeLoanAccount("A003", "C002", "Home Loan", 0.03, 200000.0, 30, "01/01/2022");
-        Account acc4 = new GoalSaverAccount("A004", "C002", "Goal Saver", 0.05, 7000.0);
-        cust2.addAccount(acc3);
-        cust2.addAccount(acc4);
-        customers.put(cust2.getCustomerID(), cust2);
-        accounts.put(acc3.getAccountID(), acc3);
-        accounts.put(acc4.getAccountID(), acc4);
+        // create 7 accounts and add them to the HashMap of accounts
+        Account acct1 = new HomeLoanAccount("HL0001", "C0001",  0.0005, 800000, 30, "01/01/2024" );
+        accounts.put("HL0001", acct1);
+        Account acct2 = new HomeLoanAccount("HL0002", "C0003", 0.0005, 600000, 20, "01/03/2024" );
+        accounts.put("HL0002", acct2);
+        
+        Account acct3 = new GoalSaverAccount("GS0001", "C0002", 0.0075, 2000 );
+        accounts.put("GS0001", acct3);
+        Account acct4 = new GoalSaverAccount("GS0002", "C0003", 0.0075, 10000 );
+        accounts.put("GS0002", acct4);
+        
+        Account acct5 = new DailyAccessAccount("DA0001", "C0003", 0.0025, 400 );
+        accounts.put("DA0001", acct5);
+        Account acct6 = new DailyAccessAccount("DA0002", "C0002", 0.0025, 1000 );
+        accounts.put("DA0002", acct6);
+        Account acct7 = new DailyAccessAccount("DA0003", "C0001", 0.0025, 3000 );
+        accounts.put("DA0003", acct7);
 
-        // Customer 3 with two accounts
-        ArrayList<Account> accounts3 = new ArrayList<>();
-        Customer cust3 = new Customer("C003", "Bob Johnson", "0412345680", "bobjohnson@example.com", 0, accounts3);
-        Account acc5 = new DailyAccessAccount("A005", "C003", "Daily Access", 0.02, 3000.0);
-        Account acc6 = new HomeLoanAccount("A006", "C003", "Home Loan", 0.03, 150000.0, 25, "01/01/2023");
-        cust3.addAccount(acc5);
-        cust3.addAccount(acc6);
-        customers.put(cust3.getCustomerID(), cust3);
-        accounts.put(acc5.getAccountID(), acc5);
-        accounts.put(acc6.getAccountID(), acc6);
+
+        // Add accounts to the respective customers
+        cust1.addAccount(acct1);
+        cust1.addAccount(acct7);
+
+        cust2.addAccount(acct3);
+        cust2.addAccount(acct6);
+
+        cust3.addAccount(acct2);
+        cust3.addAccount(acct4);
+        cust3.addAccount(acct5);
     }
 
     // Method to find a customer by ID
@@ -56,12 +60,12 @@ public class CustomerList {
         return accounts.get(id);  // Returns the account object or null if not found
     }
 
-    // The applyInterestToAll() method will be implemented in a later phase
+    // Placeholder for the applyInterestToAll method (to be implemented in later phases)
     public void applyInterestToAll() {
         System.out.println("applyInterestToAll() - Method Under Development");
     }
 
-    // The generateReports() method will be implemented in a later phase
+    // Placeholder for the generateReports method (to be implemented in later phases)
     public void generateReports() {
         System.out.println("generateReports() - Method Under Development");
     }
