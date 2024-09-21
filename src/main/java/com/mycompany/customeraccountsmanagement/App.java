@@ -15,20 +15,26 @@ public class App extends Application {
     @Override
     public void start(Stage stage) throws IOException {
 
-        // Use the customer-accounts.fxml file for the scene.
-        // Set the screen size to 808 width and 695 height.
-        scene = new Scene(loadFXML("CustomerAccounts"), 808, 695);
-        stage.setScene(scene);
-        stage.show();
-    }
+        // Step 1: Create the CustomerList object and load data
+        CustomerList customerList = new CustomerList();
+        customerList.loadCustomerData();
 
-    private static Parent loadFXML(String fxml) throws IOException {
-        FXMLLoader fxmlLoader = new FXMLLoader(App.class.getResource(fxml + ".fxml"));
-        return fxmlLoader.load();
+        // Step 2: Load the FXML file for the CustomerController
+        FXMLLoader fxmlLoader = new FXMLLoader(App.class.getResource("CustomerAccounts.fxml"));
+        Parent root = fxmlLoader.load();
+
+        // Step 3: Get the controller from the FXML file and inject the CustomerList
+        CustomerController controller = fxmlLoader.getController();
+        controller.inject(customerList);  // Inject CustomerList into the controller
+
+        // Step 4: Set up the scene and stage
+        scene = new Scene(root, 808, 695);  // Use appropriate dimensions for your app
+        stage.setScene(scene);
+        stage.setTitle("Customer Accounts Management");  // Set window title
+        stage.show();
     }
 
     public static void main(String[] args) {
         launch();
     }
-
 }

@@ -61,8 +61,8 @@ public class CustomerList {
     }
 
     // Placeholder for the applyInterestToAll method (to be implemented in later phases)
-    public void applyInterestToAll() {
-        System.out.println("applyInterestToAll() - Method Under Development");
+    public void applyMonthlyInterest() {
+        System.out.println("applyMonthlyInterest() - Method Under Development");
     }
 
     // Placeholder for the generateReports method (to be implemented in later phases)

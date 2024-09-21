@@ -15,6 +15,8 @@ public class Customer {
         this.name = name;
         this.phone = phone;
         this.email = email;
+        this.accounts = new ArrayList<>();  // Initialize the accounts list here
+        this.currentAccount = 0;
     }
 
     public String getCustomerID() {
