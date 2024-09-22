@@ -9,7 +9,7 @@ public class DailyAccessAccount extends Account {
     // Constructor
 
     public DailyAccessAccount(String id, String custId, double rate, double balance) {
-        super(id, custId, "DailyAccessAccount", rate);
+        super(id, custId, "Daily Access", rate);
         this.balance = balance;
     }
 

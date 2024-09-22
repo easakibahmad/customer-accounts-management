@@ -7,6 +7,7 @@ import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 import javafx.fxml.Initializable;
 import java.net.URL;
+import java.util.List;
 import java.util.ResourceBundle;
 
 public class CustomerController implements Initializable {
@@ -14,6 +15,7 @@ public class CustomerController implements Initializable {
     // Declare the CustomerList and current Customer
     private CustomerList customerList;
     private Customer currentCustomer;
+    private int currentAccountIndex = 0;
 
     // Text fields
     @FXML
@@ -28,11 +30,6 @@ public class CustomerController implements Initializable {
     @FXML
     private Button clearButton, exitButton, depositButton, withdrawButton, nextButton, previousButton;
 
-    // Inject CustomerList reference from App class
-    public void inject(CustomerList list) {
-        this.customerList = list;
-    }
-
     // Initialization
     @Override
     public void initialize(URL url, ResourceBundle rb) {
@@ -42,8 +39,13 @@ public class CustomerController implements Initializable {
         depositField.setPromptText("amount");
         withdrawField.setPromptText("amount");
     }
+    
+    // Inject CustomerList reference from App class
+    public void inject(CustomerList list) {
+        this.customerList = list;
+    }
 
-// Action handler for the "Find Customer" button
+    // Action handler for the "Find Customer" button
     @FXML
     public void findCustomer() {
         System.out.println("CustomerController - findCustomer()");
@@ -62,6 +64,8 @@ public class CustomerController implements Initializable {
         if (currentCustomer != null) {
             displayCustomerDetails(); // Update UI fields with customer data
             // messagesArea.setText("Customer found!");
+            currentAccountIndex = 0;
+            displayAccountDetails();
         } else {
             clearCustomerDetails(); // Clear customer details
             messagesArea.setText(customerId + " not found");
@@ -74,8 +78,13 @@ public class CustomerController implements Initializable {
         phoneField.clear();
         emailField.clear();
         numberOfAccountsField.clear();
+        
         accountDetailsArea.clear();
         messagesArea.clear();
+        accountIdField.clear();
+        accountTypeField.clear();
+        
+        withdrawButton.setDisable(false);
     }
 
     // Method to bind customer details to the UI fields
@@ -84,6 +93,41 @@ public class CustomerController implements Initializable {
         phoneField.setText(currentCustomer.getPhone());
         emailField.setText(currentCustomer.getEmail());
         numberOfAccountsField.setText(String.valueOf(currentCustomer.getNumberOfAccounts()));
+    }
+    
+    // Display the current account details
+    private void displayAccountDetails() {
+        if (currentCustomer.getNumberOfAccounts() > 0) {
+            List<Account> accounts = currentCustomer.getAccounts();
+            Account currentAccount = accounts.get(currentAccountIndex);
+            accountIdField.setText(currentAccount.getAccountID());
+            accountTypeField.setText(currentAccount.getType());
+            
+            // Disable withdraw button if the account type is "Home Loan"
+            if ("Home Loan".equalsIgnoreCase(currentAccount.getType())) {
+                withdrawButton.setDisable(true);
+            } else {
+                withdrawButton.setDisable(false);
+            }
+        }
+    }
+    
+        // Handle "Previous" button to display the previous account
+    @FXML
+    private void handlePreviousButton() {
+        if (currentCustomer != null && currentCustomer.getNumberOfAccounts() > 0) {
+            currentAccountIndex = (currentAccountIndex - 1 + currentCustomer.getNumberOfAccounts()) % currentCustomer.getNumberOfAccounts();
+            displayAccountDetails();
+        }
+    }
+    
+    // Handle "Next" button to display the next account
+    @FXML
+    private void handleNextButton() {
+        if (currentCustomer != null && currentCustomer.getNumberOfAccounts() > 0) {
+            currentAccountIndex = (currentAccountIndex + 1) % currentCustomer.getNumberOfAccounts();
+            displayAccountDetails();
+        }
     }
 
     // Handle Clear button

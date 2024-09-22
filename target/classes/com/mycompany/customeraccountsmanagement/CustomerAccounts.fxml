@@ -59,8 +59,8 @@
       <TextArea fx:id="messagesArea" layoutX="469.0" layoutY="384.0" prefHeight="111.0" prefWidth="318.0" />
      
      <!-- Previous and Next Buttons -->
-      <Button fx:id="previousButton" onAction="#handleButtonClicked" layoutX="468.0" layoutY="281.0" mnemonicParsing="false" text="Previous" />
-      <Button fx:id="nextButton" onAction="#handleButtonClicked" layoutX="555.0" layoutY="281.0" mnemonicParsing="false" text="Next" />
+      <Button fx:id="previousButton" onAction="#handlePreviousButton" layoutX="468.0" layoutY="281.0" mnemonicParsing="false" text="Previous" />
+      <Button fx:id="nextButton" onAction="#handleNextButton" layoutX="555.0" layoutY="281.0" mnemonicParsing="false" text="Next" />
       
       <!-- Other buttons -->
       <Button fx:id="depositButton" onAction="#handleButtonClicked" layoutX="38.0" layoutY="384.0" mnemonicParsing="false" text="Deposit" />

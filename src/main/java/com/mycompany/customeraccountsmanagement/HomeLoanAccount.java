@@ -10,7 +10,7 @@ public class HomeLoanAccount extends Account {
 
     // Constructor
     public HomeLoanAccount(String id, String custId, double rate, double originalLoan, int duration, String startDate) {
-        super(id, custId, "HomeLoanAccount", rate);  // Call the constructor of the superclass (Account)
+        super(id, custId, "Home Loan", rate);  // Call the constructor of the superclass (Account)
         this.originalLoan = originalLoan;
         this.duration = duration;
         this.startDate = startDate;

@@ -8,7 +8,7 @@ public class GoalSaverAccount extends Account {
 
     // Constructor
     public GoalSaverAccount(String id, String custId, double rate, double balance) {
-        super(id, custId, "GoalSaverAccount", rate);  // Call the constructor of the superclass (Account)
+        super(id, custId, "Goal Saver", rate);  // Call the constructor of the superclass (Account)
         this.balance = balance;
     }
 
