@@ -12,14 +12,24 @@ public class HomeLoanAccount extends Account {
     public HomeLoanAccount(String id, String custId, double rate, double originalLoan, int duration, String startDate) {
         super(id, custId, "Home Loan", rate);  // Call the constructor of the superclass (Account)
         this.originalLoan = originalLoan;
+        this.amountOwing = originalLoan;  // Initially, the amount owing is the full loan amount
         this.duration = duration;
         this.startDate = startDate;
+        this.amountOwing = originalLoan;  // Initially, the amount owing is the original loan
     }
     
-    // Dummy implementation of getAccountDetails() method
     @Override
     public String getAccountDetails() {
-        return "Method Name Under Development";
+        StringBuilder sb = new StringBuilder();
+
+        sb.append(String.format("Amount Owing: $%.2f%n", amountOwing));
+        sb.append(String.format("Annual Interest Rate: %.2f%%%n", getMonthlyInterestRate() * 12 * 100));
+        sb.append(String.format("Monthly Interest Charged: $%.2f%n", interestCharged));
+        sb.append(String.format("Original Loan Amount: $%.2f%n", originalLoan));
+        sb.append(String.format("Loan Start Date: %s%n", startDate));
+        sb.append(String.format("Duration of Loan: %d years%n", duration));
+
+        return sb.toString();
     }
 
     // Dummy implementation of applyMonthlyInterest()

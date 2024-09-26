@@ -72,6 +72,63 @@ public class CustomerController implements Initializable {
         }
     }
     
+    @FXML
+    public void findAccount() {
+        System.out.println("CustomerController - findAccount()");
+
+        // Get the account ID from the input field
+        String accountId = accountIdField.getText().trim();
+
+        // Validate that the input is not empty
+        if (accountId.isEmpty()) {
+            messagesArea.setText("Please enter an account ID.");
+            return;
+        }
+
+        // Attempt to find the account in the CustomerList
+        Account foundAccount = customerList.findAccount(accountId);
+
+        if (foundAccount != null) {
+            // Set the current customer to the owner of the account
+            currentCustomer = customerList.findCustomer(foundAccount.getCustomerID());
+            
+            // Set the Customer ID field
+            customerIdField.setText(currentCustomer.getCustomerID());
+
+            // Display account details and customer details
+            displayAccountDetails(foundAccount);
+            displayCustomerDetails();
+
+            // Set the current account to the found account in the customer's list
+            currentCustomer.setCurrentAccount(accountId);
+        } else {
+            messagesArea.setText("Account with ID: " + accountId + " not found.");
+            clearAccountDetails();
+        }
+    }
+    
+    // Method to display the found account's details on the UI
+    private void displayAccountDetails(Account account) {
+        accountIdField.setText(account.getAccountID());
+        accountTypeField.setText(account.getType());
+        
+        // Display account-specific details in the accountDetailsArea
+        accountDetailsArea.setText(account.getAccountDetails());
+
+        // Disable withdraw button if it's a Home Loan account
+        if ("Home Loan".equalsIgnoreCase(account.getType())) {
+            withdrawButton.setDisable(true);
+        } else {
+            withdrawButton.setDisable(false);
+        }
+    }
+
+    // Method to clear account fields if no account is found
+    private void clearAccountDetails() {
+        accountIdField.clear();
+        accountTypeField.clear();
+    }
+    
     // Clear customer details from the UI
     private void clearCustomerDetails() {
         nameField.clear();

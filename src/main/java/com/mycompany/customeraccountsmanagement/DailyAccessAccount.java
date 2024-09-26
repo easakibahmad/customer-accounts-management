@@ -7,16 +7,23 @@ public class DailyAccessAccount extends Account {
     private double interestEarned;
 
     // Constructor
-
     public DailyAccessAccount(String id, String custId, double rate, double balance) {
         super(id, custId, "Daily Access", rate);
         this.balance = balance;
+        this.minimum = balance;  // Set minimum to initial balance
     }
 
-    // Dummy implementation of getAccountDetails() method
     @Override
     public String getAccountDetails() {
-        return "Method Name Under Development";  // For now, return this message
+        StringBuilder sb = new StringBuilder();
+
+        // Add specific daily access account details
+        sb.append(String.format("Account Balance: $%.2f%n", balance));
+        sb.append(String.format("Minimum Monthly Balance: $%.2f%n", minimum));
+        sb.append(String.format("Last Interest Earned: $%.2f%n", interestEarned));
+        sb.append(String.format("Annual Interest Rate: %.2f%%%n", getMonthlyInterestRate() * 12 * 100)); // Annual interest rate
+
+        return sb.toString();
     }
 
     // Dummy implementation of applyMonthlyInterest()

@@ -26,7 +26,7 @@
             <Font name="System Bold" size="13.0" />
          </font>
       </Label>
-      <Label layoutX="469.0" layoutY="340.0" text="Messages">
+      <Label layoutX="469.0" layoutY="370.0" text="Messages">
          <font>
             <Font name="System Bold" size="13.0" />
          </font>
@@ -55,19 +55,19 @@
       <Label layoutX="348.0" layoutY="123.0" text="Account Type" />
       
       <!-- Text Areas -->
-      <TextArea fx:id="accountDetailsArea" layoutX="469.0" layoutY="159.0" prefHeight="111.0" prefWidth="318.0" />
-      <TextArea fx:id="messagesArea" layoutX="469.0" layoutY="384.0" prefHeight="111.0" prefWidth="318.0" />
+      <TextArea fx:id="accountDetailsArea" layoutX="469.0" layoutY="159.0" prefHeight="140.0" prefWidth="318.0" />
+      <TextArea fx:id="messagesArea" layoutX="469.0" layoutY="414.0" prefHeight="111.0" prefWidth="318.0" />
      
      <!-- Previous and Next Buttons -->
-      <Button fx:id="previousButton" onAction="#handlePreviousButton" layoutX="468.0" layoutY="281.0" mnemonicParsing="false" text="Previous" />
-      <Button fx:id="nextButton" onAction="#handleNextButton" layoutX="555.0" layoutY="281.0" mnemonicParsing="false" text="Next" />
+      <Button fx:id="previousButton" onAction="#handlePreviousButton" layoutX="468.0" layoutY="310.0" mnemonicParsing="false" text="Previous" />
+      <Button fx:id="nextButton" onAction="#handleNextButton" layoutX="555.0" layoutY="310.0" mnemonicParsing="false" text="Next" />
       
       <!-- Other buttons -->
       <Button fx:id="depositButton" onAction="#handleButtonClicked" layoutX="38.0" layoutY="384.0" mnemonicParsing="false" text="Deposit" />
       <Button fx:id="withdrawButton" onAction="#handleButtonClicked" layoutX="38.0" layoutY="428.0" mnemonicParsing="false" text="Withdraw" />
       <Button layoutX="38.0" layoutY="591.0" mnemonicParsing="false" text="Generate Reports" onAction="#handleButtonClicked"/>
       <Button layoutX="37.0" layoutY="471.0" mnemonicParsing="false" text="Find Customer" onAction="#findCustomer"/>
-      <Button layoutX="36.0" layoutY="510.0" mnemonicParsing="false" text="Find Account" onAction="#handleButtonClicked"/>
+      <Button layoutX="36.0" layoutY="510.0" mnemonicParsing="false" text="Find Account" onAction="#findAccount"/>
       <Button layoutX="37.0" layoutY="550.0" mnemonicParsing="false" text="Add all monthly interests" onAction="#handleButtonClicked"/>
       
       <!-- Clear and Exit Buttons -->
