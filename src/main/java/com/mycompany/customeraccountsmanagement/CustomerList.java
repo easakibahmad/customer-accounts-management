@@ -20,14 +20,14 @@ public class CustomerList {
         customers.put("C0003", cust3);
 
         // create 7 accounts and add them to the HashMap of accounts
-        Account acct1 = new HomeLoanAccount("HL0001", "C0001",  0.0005, 800000, 30, "01/01/2024" );
+        Account acct1 = new HomeLoanAccount("HL0001", "C0001",  0.005, 800000, 30, "01/01/2024" );
         accounts.put("HL0001", acct1);
-        Account acct2 = new HomeLoanAccount("HL0002", "C0003", 0.0005, 600000, 20, "01/03/2024" );
+        Account acct2 = new HomeLoanAccount("HL0002", "C0003", 0.005, 600000, 20, "01/03/2024" );
         accounts.put("HL0002", acct2);
         
-        Account acct3 = new GoalSaverAccount("GS0001", "C0002", 0.0075, 2000 );
+        Account acct3 = new GoalSaverAccount("GS0001", "C0002", 0.0050, 2000 );
         accounts.put("GS0001", acct3);
-        Account acct4 = new GoalSaverAccount("GS0002", "C0003", 0.0075, 10000 );
+        Account acct4 = new GoalSaverAccount("GS0002", "C0003", 0.0050, 10000 );
         accounts.put("GS0002", acct4);
         
         Account acct5 = new DailyAccessAccount("DA0001", "C0003", 0.0025, 400 );
