@@ -26,22 +26,51 @@ public class DailyAccessAccount extends Account {
         return sb.toString();
     }
 
-    // Dummy implementation of applyMonthlyInterest()
     @Override
     public void applyMonthlyInterest() {
-        System.out.println("applyMonthlyInterest() - Method Under Development");
+        // Calculate the interest earned on the current balance
+        double interest = minimum * getMonthlyInterestRate();  // Interest calculated on minimum balance
+        interestEarned = interest;  // Store the interest earned for this month
+
+        // Add the interest to the balance
+        balance += interest;
+
+        // Reset the minimum balance for the next month to the current balance
+        minimum = balance;
     }
 
-    // Dummy implementation of withdraw()
-    @Override
-    public void withdraw(double amount) {
-        System.out.println("withdraw() - Method Under Development");
-    }
-
-    // Dummy implementation of deposit()
     @Override
     public void deposit(double amount) {
-        System.out.println("deposit() - Method Under Development");
+        if (amount > 0) {
+            balance += amount;
+
+            // Check if the current balance is lower than the minimum balance and update if necessary
+            if (balance < minimum) {
+                minimum = balance;
+            }
+
+            System.out.println("Deposit successful. Balance updated.");
+        } else {
+            System.out.println("Deposit amount must be positive.");
+        }
+    }
+
+    @Override
+    public void withdraw(double amount) {
+        if (amount > 0 && balance >= amount) {
+            balance -= amount;
+
+            // Check if the current balance is lower than the minimum balance and update if necessary
+            if (balance < minimum) {
+                minimum = balance;
+            }
+
+            System.out.println("Withdraw successful. Balance updated.");
+        } else if (amount <= 0) {
+            System.out.println("Withdraw amount must be positive.");
+        } else {
+            System.out.println("Insufficient balance for withdrawal.");
+        }
     }
 
     // Getters for the balance and minimum (optional, based on future use)

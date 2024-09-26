@@ -32,22 +32,31 @@ public class HomeLoanAccount extends Account {
         return sb.toString();
     }
 
-    // Dummy implementation of applyMonthlyInterest()
     @Override
     public void applyMonthlyInterest() {
-        System.out.println("applyMonthlyInterest() - Method Under Development");
+        // Calculate the interest based on the amount owing and the monthly interest rate
+        double interest = amountOwing * getMonthlyInterestRate();
+        interestCharged = interest;  // Store the interest charged for this month
+
+        // Add the interest to the amount owing
+        amountOwing += interest;
     }
     
-    // Dummy implementation of deposit()
     @Override
     public void deposit(double amount) {
-        System.out.println("deposit() - Method Under Development");
+        if (amount > 0) {
+            // Reduce the amount owing by the deposit amount
+            amountOwing -= amount;
+            System.out.println("Deposit successful. Amount owing updated.");
+        } else {
+            System.out.println("Deposit amount must be positive.");
+        }
     }
 
-    // Dummy implementation of withdraw()
     @Override
     public void withdraw(double amount) {
-        System.out.println("withdraw() - Method Under Development");
+        // Home loans cannot be withdrawn from, so this method does nothing
+        System.out.println("Withdrawals are not allowed for Home Loan accounts.");
     }
 }
 

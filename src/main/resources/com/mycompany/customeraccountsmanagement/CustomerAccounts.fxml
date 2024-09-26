@@ -63,12 +63,12 @@
       <Button fx:id="nextButton" onAction="#handleNextButton" layoutX="555.0" layoutY="310.0" mnemonicParsing="false" text="Next" />
       
       <!-- Other buttons -->
-      <Button fx:id="depositButton" onAction="#handleButtonClicked" layoutX="38.0" layoutY="384.0" mnemonicParsing="false" text="Deposit" />
-      <Button fx:id="withdrawButton" onAction="#handleButtonClicked" layoutX="38.0" layoutY="428.0" mnemonicParsing="false" text="Withdraw" />
+      <Button fx:id="depositButton" onAction="#handleDepositButton" layoutX="38.0" layoutY="384.0" mnemonicParsing="false" text="Deposit" />
+      <Button fx:id="withdrawButton" onAction="#handleWithdrawButton" layoutX="38.0" layoutY="428.0" mnemonicParsing="false" text="Withdraw" />
       <Button layoutX="38.0" layoutY="591.0" mnemonicParsing="false" text="Generate Reports" onAction="#handleButtonClicked"/>
       <Button layoutX="37.0" layoutY="471.0" mnemonicParsing="false" text="Find Customer" onAction="#findCustomer"/>
       <Button layoutX="36.0" layoutY="510.0" mnemonicParsing="false" text="Find Account" onAction="#findAccount"/>
-      <Button layoutX="37.0" layoutY="550.0" mnemonicParsing="false" text="Add all monthly interests" onAction="#handleButtonClicked"/>
+      <Button layoutX="37.0" layoutY="550.0" mnemonicParsing="false" text="Add all monthly interests" onAction="#handleApplyMonthlyInterestButton"/>
       
       <!-- Clear and Exit Buttons -->
       <Button fx:id="clearButton" onAction="#handleClearButton" layoutX="40.0" layoutY="630.0" mnemonicParsing="false" text="Clear" />

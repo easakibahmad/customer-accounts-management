@@ -205,6 +205,53 @@ public class CustomerController implements Initializable {
 
         withdrawButton.setDisable(false);
     }
+    
+    @FXML
+    private void handleDepositButton() {
+        try {
+            double amount = Double.parseDouble(depositField.getText());
+
+            if (amount <= 0) {
+                messagesArea.setText("Deposit amount must be positive.");
+            } else {
+                currentCustomer.getCurrentAccount().deposit(amount);
+                displayAccountDetails(currentCustomer.getCurrentAccount()); // Update UI
+                messagesArea.setText("Deposit successful.");
+            }
+        } catch (NumberFormatException e) {
+            messagesArea.setText("Invalid deposit amount. Please enter a valid number.");
+        }
+    }
+
+    @FXML
+    private void handleWithdrawButton() {
+        try {
+            double amount = Double.parseDouble(withdrawField.getText());
+
+            if (amount <= 0) {
+                messagesArea.setText("Withdraw amount must be positive.");
+            } else {
+                currentCustomer.getCurrentAccount().withdraw(amount);
+                displayAccountDetails(currentCustomer.getCurrentAccount()); // Update UI
+                messagesArea.setText("Withdraw successful.");
+            }
+        } catch (NumberFormatException e) {
+            messagesArea.setText("Invalid withdraw amount. Please enter a valid number.");
+        }
+    }
+    
+    @FXML
+    private void handleApplyMonthlyInterestButton() {
+        // Apply monthly interest to the current account
+        currentCustomer.getCurrentAccount().applyMonthlyInterest();
+
+        // Update the account details in the UI
+        displayAccountDetails(currentCustomer.getCurrentAccount());
+
+        // Display success message
+        messagesArea.setText("Monthly interest applied successfully.");
+    }
+
 
     // Handle Exit button
     @FXML

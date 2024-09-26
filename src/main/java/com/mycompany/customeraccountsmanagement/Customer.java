@@ -35,8 +35,12 @@ public class Customer {
         return email;
     }
 
-    public int getCurrentAccount() {
-        return currentAccount;
+    // Method to get the current account object
+    public Account getCurrentAccount() {
+        if (!accounts.isEmpty() && currentAccount >= 0 && currentAccount < accounts.size()) {
+            return accounts.get(currentAccount);  // Return the Account at the current index
+        }
+        return null;  // Return null if no account exists
     }
 
     public ArrayList<Account> getAccounts() {

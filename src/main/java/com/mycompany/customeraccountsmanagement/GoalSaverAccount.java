@@ -27,21 +27,43 @@ public class GoalSaverAccount extends Account {
         return sb.toString();
     }
 
-    // Dummy implementation of applyMonthlyInterest()
+    // Implement applyMonthlyInterest() method
     @Override
     public void applyMonthlyInterest() {
-        System.out.println("applyMonthlyInterest() - Method Under Development");
+        // Check if balance is greater than or equal to startOfMonthBalance + 500
+        if (balance >= startOfMonthBalance + 500) {
+            // Calculate interest
+            interestEarned = balance * getMonthlyInterestRate();
+            balance += interestEarned;  // Add the interest to the balance
+        } else {
+            interestEarned = 0;  // No interest earned if condition is not met
+        }
+
+        // Reset startOfMonthBalance to the new balance after applying interest
+        startOfMonthBalance = balance;
     }
     
-    // Dummy implementation of deposit()
+    // Deposit money into the account
     @Override
     public void deposit(double amount) {
-        System.out.println("deposit() - Method Under Development");
+        if (amount > 0) {
+            balance += amount;
+            System.out.println("Deposit successful. Balance updated.");
+        } else {
+            System.out.println("Deposit amount must be positive.");
+        }
     }
 
-    // Dummy implementation of withdraw()
+    // Withdraw money from the account (ensure no overdrawing)
     @Override
     public void withdraw(double amount) {
-        System.out.println("withdraw() - Method Under Development");
+        if (amount > 0 && balance >= amount) {
+            balance -= amount;
+            System.out.println("Withdraw successful. Balance updated.");
+        } else if (amount <= 0) {
+            System.out.println("Withdraw amount must be positive.");
+        } else {
+            System.out.println("Insufficient balance for withdrawal.");
+        }
     }
 }
