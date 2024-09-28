@@ -66,4 +66,17 @@ public class GoalSaverAccount extends Account {
             System.out.println("Insufficient balance for withdrawal.");
         }
     }
+    
+    @Override
+    public String getAccountDetailsForReport() {
+        StringBuilder sb = new StringBuilder();
+
+        // Add specific goal saver account details
+        sb.append(String.format("Account Balance: $%.2f%n", balance));
+        sb.append(String.format("Balance at start of month: $%.2f%n", startOfMonthBalance));
+        sb.append(String.format("Last Interest Earned: $%.2f%n", interestEarned));
+        sb.append(String.format("Interest Rate: %.4f%n", getMonthlyInterestRate() * 100)); // Properly calculate annual interest rate
+
+        return sb.toString();
+    }
 }

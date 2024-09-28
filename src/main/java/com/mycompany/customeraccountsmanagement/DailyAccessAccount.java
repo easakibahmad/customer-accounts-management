@@ -72,6 +72,19 @@ public class DailyAccessAccount extends Account {
             System.out.println("Insufficient balance for withdrawal.");
         }
     }
+    
+    @Override
+    public String getAccountDetailsForReport() {
+        StringBuilder sb = new StringBuilder();
+
+        // Add specific daily access account details
+        sb.append(String.format("Account Balance: $%.2f%n", balance));
+        sb.append(String.format("Minimum Monthly Balance: $%.2f%n", minimum));
+        sb.append(String.format("Last Interest Earned: $%.4f%n", interestEarned));
+        sb.append(String.format("Interest Rate: %.4f%n", getMonthlyInterestRate() * 100)); // Annual interest rate
+
+        return sb.toString();
+    }
 
     // Getters for the balance and minimum (optional, based on future use)
     public double getBalance() {

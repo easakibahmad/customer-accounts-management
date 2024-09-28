@@ -7,7 +7,6 @@ import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 import javafx.fxml.Initializable;
 import java.net.URL;
-import java.util.List;
 import java.util.ResourceBundle;
 
 public class CustomerController implements Initializable {
@@ -63,9 +62,18 @@ public class CustomerController implements Initializable {
 
         if (currentCustomer != null) {
             displayCustomerDetails(); // Update UI fields with customer data
-            // messagesArea.setText("Customer found!");
+
             currentAccountIndex = 0;
-            displayAccountDetails();
+            
+            // Check if the customer has accounts, and display the first account if available
+            if (currentCustomer.getNumberOfAccounts() > 0) {
+                Account firstAccount = currentCustomer.getAccounts().get(currentAccountIndex);
+                displayAccountDetails(firstAccount);
+            } else {
+                // If no accounts are found, clear the account details section
+                clearAccountDetails();
+                messagesArea.setText("No accounts found for this customer.");
+            }
         } else {
             clearCustomerDetails(); // Clear customer details
             messagesArea.setText(customerId + " not found");
@@ -152,38 +160,23 @@ public class CustomerController implements Initializable {
         numberOfAccountsField.setText(String.valueOf(currentCustomer.getNumberOfAccounts()));
     }
     
-    // Display the current account details
-    private void displayAccountDetails() {
-        if (currentCustomer.getNumberOfAccounts() > 0) {
-            List<Account> accounts = currentCustomer.getAccounts();
-            Account currentAccount = accounts.get(currentAccountIndex);
-            accountIdField.setText(currentAccount.getAccountID());
-            accountTypeField.setText(currentAccount.getType());
-            
-            // Disable withdraw button if the account type is "Home Loan"
-            if ("Home Loan".equalsIgnoreCase(currentAccount.getType())) {
-                withdrawButton.setDisable(true);
-            } else {
-                withdrawButton.setDisable(false);
-            }
-        }
-    }
-    
-        // Handle "Previous" button to display the previous account
-    @FXML
-    private void handlePreviousButton() {
-        if (currentCustomer != null && currentCustomer.getNumberOfAccounts() > 0) {
-            currentAccountIndex = (currentAccountIndex - 1 + currentCustomer.getNumberOfAccounts()) % currentCustomer.getNumberOfAccounts();
-            displayAccountDetails();
-        }
-    }
-    
     // Handle "Next" button to display the next account
     @FXML
     private void handleNextButton() {
         if (currentCustomer != null && currentCustomer.getNumberOfAccounts() > 0) {
             currentAccountIndex = (currentAccountIndex + 1) % currentCustomer.getNumberOfAccounts();
-            displayAccountDetails();
+            Account nextAccount = currentCustomer.getAccounts().get(currentAccountIndex);
+            displayAccountDetails(nextAccount); // Call the correct display method with the next account
+        }
+    }
+
+    // Handle "Previous" button to display the previous account
+    @FXML
+    private void handlePreviousButton() {
+        if (currentCustomer != null && currentCustomer.getNumberOfAccounts() > 0) {
+            currentAccountIndex = (currentAccountIndex - 1 + currentCustomer.getNumberOfAccounts()) % currentCustomer.getNumberOfAccounts();
+            Account previousAccount = currentCustomer.getAccounts().get(currentAccountIndex);
+            displayAccountDetails(previousAccount); // Call the correct display method with the previous account
         }
     }
 
@@ -207,6 +200,29 @@ public class CustomerController implements Initializable {
     }
     
     @FXML
+    private void handleWithdrawButton() {
+       try {
+           double amount = Double.parseDouble(withdrawField.getText());
+
+           if (amount <= 0) {
+               messagesArea.setText("Withdraw amount must be positive.");
+           } else {
+               // Ensure that the correct account based on currentAccountIndex is being used
+               Account currentAccount = currentCustomer.getAccounts().get(currentAccountIndex);
+
+               // Perform the withdraw action on the correct account
+               currentAccount.withdraw(amount);
+
+               // Update the UI with the correct account details
+               displayAccountDetails(currentAccount);
+               messagesArea.setText("Withdraw successful.");
+           }
+       } catch (NumberFormatException e) {
+           messagesArea.setText("Invalid withdraw amount. Please enter a valid number.");
+       }
+    }
+
+    @FXML
     private void handleDepositButton() {
         try {
             double amount = Double.parseDouble(depositField.getText());
@@ -214,44 +230,41 @@ public class CustomerController implements Initializable {
             if (amount <= 0) {
                 messagesArea.setText("Deposit amount must be positive.");
             } else {
-                currentCustomer.getCurrentAccount().deposit(amount);
-                displayAccountDetails(currentCustomer.getCurrentAccount()); // Update UI
+                // Ensure that the correct account based on currentAccountIndex is being used
+                Account currentAccount = currentCustomer.getAccounts().get(currentAccountIndex);
+
+                // Perform the deposit action on the correct account
+                currentAccount.deposit(amount);
+
+                // Update the UI with the correct account details
+                displayAccountDetails(currentAccount); // Ensure correct account details are displayed
                 messagesArea.setText("Deposit successful.");
             }
         } catch (NumberFormatException e) {
             messagesArea.setText("Invalid deposit amount. Please enter a valid number.");
         }
     }
-
-    @FXML
-    private void handleWithdrawButton() {
-        try {
-            double amount = Double.parseDouble(withdrawField.getText());
-
-            if (amount <= 0) {
-                messagesArea.setText("Withdraw amount must be positive.");
-            } else {
-                currentCustomer.getCurrentAccount().withdraw(amount);
-                displayAccountDetails(currentCustomer.getCurrentAccount()); // Update UI
-                messagesArea.setText("Withdraw successful.");
-            }
-        } catch (NumberFormatException e) {
-            messagesArea.setText("Invalid withdraw amount. Please enter a valid number.");
-        }
-    }
     
     @FXML
     private void handleApplyMonthlyInterestButton() {
-        // Apply monthly interest to the current account
-        currentCustomer.getCurrentAccount().applyMonthlyInterest();
+        // Apply monthly interest to the current account based on currentAccountIndex
+        Account currentAccount = currentCustomer.getAccounts().get(currentAccountIndex);
 
-        // Update the account details in the UI
-        displayAccountDetails(currentCustomer.getCurrentAccount());
+        // Apply monthly interest to the correct account
+        currentAccount.applyMonthlyInterest();
+
+        // Update the account details in the UI with the correct account
+        displayAccountDetails(currentAccount);
 
         // Display success message
         messagesArea.setText("Monthly interest applied successfully.");
     }
-
+    
+    @FXML
+    private void handleGenerateReportsButton() {
+        customerList.generateReports();
+        messagesArea.setText("Report generated successfully.");
+    }
 
     // Handle Exit button
     @FXML
@@ -267,6 +280,4 @@ public class CustomerController implements Initializable {
         String buttonText = clickedButton.getText();
         messagesArea.setText(buttonText + " button clicked - under development");
     }
-
-    // Implement other button handlers as needed
 }
