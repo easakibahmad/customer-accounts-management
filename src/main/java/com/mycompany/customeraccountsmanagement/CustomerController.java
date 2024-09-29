@@ -129,6 +129,15 @@ public class CustomerController implements Initializable {
         } else {
             withdrawButton.setDisable(false);
         }
+        
+        // Disable next and previous buttons if the customer has only one account
+        if (currentCustomer.getNumberOfAccounts() == 1) {
+            nextButton.setDisable(true);
+            previousButton.setDisable(true);
+        } else {
+            nextButton.setDisable(false);
+            previousButton.setDisable(false);
+        }
     }
 
     // Method to clear account fields if no account is found
