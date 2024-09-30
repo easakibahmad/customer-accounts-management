@@ -20,11 +20,13 @@ public class CustomerList {
         Customer cust1 = new Customer("C0001", "John Smith", "0412345678", "j.smith@cqumail.com");
         Customer cust2 = new Customer("C0002", "Mary Brown", "0412456789", "m.brown@cqumail.com");
         Customer cust3 = new Customer("C0003", "Peter Green", "0412567890", "p.green@cqumail.com");
+        Customer cust4 = new Customer("C0004", "John Terry", "0412534567", "j.terry@cqumail.com");
 
         // Add them to the HashMap of customers
         customers.put("C0001", cust1);
         customers.put("C0002", cust2);
         customers.put("C0003", cust3);
+        customers.put("C0004",cust4);
 
         // create 7 accounts and add them to the HashMap of accounts
         Account acct1 = new HomeLoanAccount("HL0001", "C0001",  0.0005, 800000, 30, "01/01/2024" );
@@ -43,7 +45,8 @@ public class CustomerList {
         accounts.put("DA0002", acct6);
         Account acct7 = new DailyAccessAccount("DA0003", "C0001", 0.0025, 3000 );
         accounts.put("DA0003", acct7);
-
+        Account acct8 = new DailyAccessAccount("DA0004", "C0004", 0.0025, 3000 );
+        accounts.put("DA0004", acct8);
 
         // Add accounts to the respective customers
         cust1.addAccount(acct1);
@@ -55,6 +58,8 @@ public class CustomerList {
         cust3.addAccount(acct2);
         cust3.addAccount(acct4);
         cust3.addAccount(acct5);
+
+        cust4.addAccount(acct8);
     }
 
     // Method to find a customer by ID

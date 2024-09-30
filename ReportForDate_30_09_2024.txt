@@ -1,4 +1,4 @@
-Date: 28/09/2024	Customer ID: C0001	Name: John Smith
+Date: 30/09/2024	Customer ID: C0001	Name: John Smith
 
 Account ID: HL0001	Type: Home Loan
 Amount Owing: $800000.00
@@ -17,7 +17,7 @@ Interest Rate: 0.2500
 
 
 ====================================================================
-Date: 28/09/2024	Customer ID: C0002	Name: Mary Brown
+Date: 30/09/2024	Customer ID: C0002	Name: Mary Brown
 
 Account ID: GS0001	Type: Goal Saver
 Account Balance: $2000.00
@@ -34,7 +34,7 @@ Interest Rate: 0.2500
 
 
 ====================================================================
-Date: 28/09/2024	Customer ID: C0003	Name: Peter Green
+Date: 30/09/2024	Customer ID: C0003	Name: Peter Green
 
 Account ID: HL0002	Type: Home Loan
 Amount Owing: $600000.00
@@ -55,6 +55,16 @@ Interest Rate: 0.7500
 Account ID: DA0001	Type: Daily Access
 Account Balance: $400.00
 Minimum Monthly Balance: $400.00
+Last Interest Earned: $0.0000
+Interest Rate: 0.2500
+
+
+====================================================================
+Date: 30/09/2024	Customer ID: C0004	Name: John Terry
+
+Account ID: DA0004	Type: Daily Access
+Account Balance: $3000.00
+Minimum Monthly Balance: $3000.00
 Last Interest Earned: $0.0000
 Interest Rate: 0.2500
 

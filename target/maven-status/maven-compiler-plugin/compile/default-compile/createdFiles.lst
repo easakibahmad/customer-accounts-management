@@ -1,9 +1,9 @@
-com\mycompany\customeraccountsmanagement\GoalSaverAccount.class
-com\mycompany\customeraccountsmanagement\Account.class
-com\mycompany\customeraccountsmanagement\App.class
-com\mycompany\customeraccountsmanagement\Customer.class
-com\mycompany\customeraccountsmanagement\CustomerList.class
-com\mycompany\customeraccountsmanagement\DailyAccessAccount.class
+com/mycompany/customeraccountsmanagement/Customer.class
+com/mycompany/customeraccountsmanagement/GoalSaverAccount.class
+com/mycompany/customeraccountsmanagement/App.class
+com/mycompany/customeraccountsmanagement/HomeLoanAccount.class
 module-info.class
-com\mycompany\customeraccountsmanagement\CustomerController.class
-com\mycompany\customeraccountsmanagement\HomeLoanAccount.class
+com/mycompany/customeraccountsmanagement/DailyAccessAccount.class
+com/mycompany/customeraccountsmanagement/Account.class
+com/mycompany/customeraccountsmanagement/CustomerList.class
+com/mycompany/customeraccountsmanagement/CustomerController.class
