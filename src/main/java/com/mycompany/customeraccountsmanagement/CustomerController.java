@@ -9,128 +9,144 @@ import javafx.fxml.Initializable;
 import java.net.URL;
 import java.util.ResourceBundle;
 
+/**
+ * Controller class that handles customer and account-related actions 
+ * for the CustomerAccountsManagement application.
+ * This class provides the logic for interacting with the user interface (UI),
+ * allowing users to find customers, view their accounts, and perform operations
+ * like depositing, withdrawing, and generating reports.
+ */
 public class CustomerController implements Initializable {
 
     // Declare the CustomerList and current Customer
-    private CustomerList customerList;
-    private Customer currentCustomer;
-    private int currentAccountIndex = 0;
+    private CustomerList customerList;  // List of all customers
+    private Customer currentCustomer;  // Currently selected customer
+    private int currentAccountIndex = 0;  // Index to keep track of the current account being displayed
 
-    // Text fields
+    // Text fields for input/output
     @FXML
-    private TextField customerIdField, nameField, phoneField, emailField, numberOfAccountsField, accountIdField,
-                      accountTypeField, depositField, withdrawField;
+    private TextField customerIdField, nameField, phoneField, emailField, numberOfAccountsField, accountIdField, accountTypeField, depositField, withdrawField;
 
-    // Text areas
+    // Text areas for displaying account details and messages
     @FXML
     private TextArea accountDetailsArea, messagesArea;
 
-    // Buttons
+    // Buttons for various actions
     @FXML
     private Button clearButton, exitButton, depositButton, withdrawButton, nextButton, previousButton;
 
-    // Initialization
+    /**
+     * Initializes the controller. This method is automatically called when the controller is created.
+     * Disables editing for text areas and sets placeholder text for input fields.
+     * 
+     * @param url The location used to resolve relative paths for the root object
+     * @param rb The resources used to localize the root object
+     */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         accountDetailsArea.setEditable(false);
         messagesArea.setEditable(false);
-
         depositField.setPromptText("amount");
         withdrawField.setPromptText("amount");
     }
     
-    // Inject CustomerList reference from App class
+    /**
+     * Injects the CustomerList object from the main application.
+     * 
+     * @param list The CustomerList object passed from the main application
+     */
     public void inject(CustomerList list) {
         this.customerList = list;
     }
 
-    // Action handler for the "Find Customer" button
+    /**
+     * Finds a customer based on the input in the customerIdField.
+     * Updates the UI with the customer's details and the first account, if available.
+     * Displays an error message if the customer is not found.
+     */
     @FXML
     public void findCustomer() {
         System.out.println("CustomerController - findCustomer()");
         String customerId = customerIdField.getText().trim();
 
-        // Check if customer ID field is empty
         if (customerId.isEmpty()) {
             messagesArea.setText("Please enter a customer ID.");
             return;
         }
-        clearCustomerDetails();
 
-        // Attempt to find the customer in the CustomerList
-        currentCustomer = customerList.findCustomer(customerId);
+        clearCustomerDetails();  // Clear previous details from UI
+
+        currentCustomer = customerList.findCustomer(customerId);  // Find customer by ID
 
         if (currentCustomer != null) {
-            displayCustomerDetails(); // Update UI fields with customer data
+            displayCustomerDetails();  // Show customer details
 
-            currentAccountIndex = 0;
-            
-            // Check if the customer has accounts, and display the first account if available
+            currentAccountIndex = 0;  // Reset account index to the first account
+
+            // Check if customer has accounts and display the first account
             if (currentCustomer.getNumberOfAccounts() > 0) {
                 Account firstAccount = currentCustomer.getAccounts().get(currentAccountIndex);
-                displayAccountDetails(firstAccount);
+                displayAccountDetails(firstAccount);  // Display details of the first account
             } else {
-                // If no accounts are found, clear the account details section
-                clearAccountDetails();
+                clearAccountDetails();  // No accounts available for the customer
                 messagesArea.setText("No accounts found for this customer.");
             }
         } else {
-            clearCustomerDetails(); // Clear customer details
+            clearCustomerDetails();  // Clear UI if customer not found
             messagesArea.setText(customerId + " not found");
         }
     }
     
+    /**
+     * Finds an account based on the input in the accountIdField.
+     * Updates the UI with the details of the account and its associated customer.
+     */
     @FXML
     public void findAccount() {
         System.out.println("CustomerController - findAccount()");
 
-        // Get the account ID from the input field
         String accountId = accountIdField.getText().trim();
 
-        // Validate that the input is not empty
         if (accountId.isEmpty()) {
             messagesArea.setText("Please enter an account ID.");
             return;
         }
 
-        // Attempt to find the account in the CustomerList
-        Account foundAccount = customerList.findAccount(accountId);
+        Account foundAccount = customerList.findAccount(accountId);  // Search for the account
 
         if (foundAccount != null) {
-            // Set the current customer to the owner of the account
-            currentCustomer = customerList.findCustomer(foundAccount.getCustomerID());
-            
-            // Set the Customer ID field
+            currentCustomer = customerList.findCustomer(foundAccount.getCustomerID());  // Get the customer who owns the account
             customerIdField.setText(currentCustomer.getCustomerID());
 
-            // Display account details and customer details
-            displayAccountDetails(foundAccount);
-            displayCustomerDetails();
+            displayAccountDetails(foundAccount);  // Show the account details
+            displayCustomerDetails();  // Show customer details
 
-            // Set the current account to the found account in the customer's list
-            currentCustomer.setCurrentAccount(accountId);
+            currentCustomer.setCurrentAccount(accountId);  // Set the found account as the current account
         } else {
             messagesArea.setText("Account with ID: " + accountId + " not found.");
-            clearAccountDetails();
+            clearAccountDetails();  // Clear UI if account not found
         }
     }
-    
-    // Method to display the found account's details on the UI
+
+    /**
+     * Displays details of the given account in the UI.
+     * Also enables/disables the withdraw button based on the account type.
+     * 
+     * @param account The account whose details are to be displayed
+     */
     private void displayAccountDetails(Account account) {
         accountIdField.setText(account.getAccountID());
         accountTypeField.setText(account.getType());
-        
-        // Display account-specific details in the accountDetailsArea
         accountDetailsArea.setText(account.getAccountDetails());
 
-        // Disable withdraw button if it's a Home Loan account
+        // Disable withdraw button for Home Loan accounts
         if ("Home Loan".equalsIgnoreCase(account.getType())) {
             withdrawButton.setDisable(true);
         } else {
             withdrawButton.setDisable(false);
         }
-        
-        // Disable next and previous buttons if the customer has only one account
+
+        // Disable next/previous buttons if only one account exists
         if (currentCustomer.getNumberOfAccounts() == 1) {
             nextButton.setDisable(true);
             previousButton.setDisable(true);
@@ -140,56 +156,67 @@ public class CustomerController implements Initializable {
         }
     }
 
-    // Method to clear account fields if no account is found
+    /**
+     * Clears the account-related fields from the UI.
+     */
     private void clearAccountDetails() {
         accountIdField.clear();
         accountTypeField.clear();
     }
-    
-    // Clear customer details from the UI
+
+    /**
+     * Clears the customer-related fields from the UI.
+     * Also resets any account details displayed on the screen.
+     */
     private void clearCustomerDetails() {
         nameField.clear();
         phoneField.clear();
         emailField.clear();
         numberOfAccountsField.clear();
-        
         accountDetailsArea.clear();
         messagesArea.clear();
         accountIdField.clear();
         accountTypeField.clear();
-        
-        withdrawButton.setDisable(false);
+        withdrawButton.setDisable(false);  // Re-enable the withdraw button
     }
 
-    // Method to bind customer details to the UI fields
+    /**
+     * Displays the details of the current customer in the UI fields.
+     */
     private void displayCustomerDetails() {
         nameField.setText(currentCustomer.getName());
         phoneField.setText(currentCustomer.getPhone());
         emailField.setText(currentCustomer.getEmail());
         numberOfAccountsField.setText(String.valueOf(currentCustomer.getNumberOfAccounts()));
     }
-    
-    // Handle "Next" button to display the next account
+
+    /**
+     * Handles the action of the "Next" button to display the next account of the current customer.
+     */
     @FXML
     private void handleNextButton() {
         if (currentCustomer != null && currentCustomer.getNumberOfAccounts() > 0) {
             currentAccountIndex = (currentAccountIndex + 1) % currentCustomer.getNumberOfAccounts();
             Account nextAccount = currentCustomer.getAccounts().get(currentAccountIndex);
-            displayAccountDetails(nextAccount); // Call the correct display method with the next account
+            displayAccountDetails(nextAccount);  // Display next account details
         }
     }
 
-    // Handle "Previous" button to display the previous account
+    /**
+     * Handles the action of the "Previous" button to display the previous account of the current customer.
+     */
     @FXML
     private void handlePreviousButton() {
         if (currentCustomer != null && currentCustomer.getNumberOfAccounts() > 0) {
             currentAccountIndex = (currentAccountIndex - 1 + currentCustomer.getNumberOfAccounts()) % currentCustomer.getNumberOfAccounts();
             Account previousAccount = currentCustomer.getAccounts().get(currentAccountIndex);
-            displayAccountDetails(previousAccount); // Call the correct display method with the previous account
+            displayAccountDetails(previousAccount);  // Display previous account details
         }
     }
 
-    // Handle Clear button
+    /**
+     * Clears all the input and output fields when the Clear button is clicked.
+     */
     @FXML
     private void handleClearButton() {
         customerIdField.clear();
@@ -197,40 +224,41 @@ public class CustomerController implements Initializable {
         phoneField.clear();
         emailField.clear();
         numberOfAccountsField.clear();
-
         accountIdField.clear();
         accountTypeField.clear();
         accountDetailsArea.clear();
         messagesArea.clear();
         depositField.clear();
         withdrawField.clear();
-
-        withdrawButton.setDisable(false);
+        withdrawButton.setDisable(false);  // Reset the withdraw button
     }
-    
+
+    /**
+     * Handles the action for withdrawing money from the current account.
+     * Updates the UI with the updated account balance after the withdrawal.
+     */
     @FXML
     private void handleWithdrawButton() {
-       try {
-           double amount = Double.parseDouble(withdrawField.getText());
+        try {
+            double amount = Double.parseDouble(withdrawField.getText());
 
-           if (amount <= 0) {
-               messagesArea.setText("Withdraw amount must be positive.");
-           } else {
-               // Ensure that the correct account based on currentAccountIndex is being used
-               Account currentAccount = currentCustomer.getAccounts().get(currentAccountIndex);
-
-               // Perform the withdraw action on the correct account
-               currentAccount.withdraw(amount);
-
-               // Update the UI with the correct account details
-               displayAccountDetails(currentAccount);
-               messagesArea.setText("Withdraw successful.");
-           }
-       } catch (NumberFormatException e) {
-           messagesArea.setText("Invalid withdraw amount. Please enter a valid number.");
-       }
+            if (amount <= 0) {
+                messagesArea.setText("Withdraw amount must be positive.");
+            } else {
+                Account currentAccount = currentCustomer.getAccounts().get(currentAccountIndex);
+                currentAccount.withdraw(amount);  // Perform the withdrawal
+                displayAccountDetails(currentAccount);  // Update account details in the UI
+                messagesArea.setText("Withdraw successful.");
+            }
+        } catch (NumberFormatException e) {
+            messagesArea.setText("Invalid withdraw amount. Please enter a valid number.");
+        }
     }
 
+    /**
+     * Handles the action for depositing money into the current account.
+     * Updates the UI with the updated account balance after the deposit.
+     */
     @FXML
     private void handleDepositButton() {
         try {
@@ -239,50 +267,48 @@ public class CustomerController implements Initializable {
             if (amount <= 0) {
                 messagesArea.setText("Deposit amount must be positive.");
             } else {
-                // Ensure that the correct account based on currentAccountIndex is being used
                 Account currentAccount = currentCustomer.getAccounts().get(currentAccountIndex);
-
-                // Perform the deposit action on the correct account
-                currentAccount.deposit(amount);
-
-                // Update the UI with the correct account details
-                displayAccountDetails(currentAccount); // Ensure correct account details are displayed
+                currentAccount.deposit(amount);  // Perform the deposit
+                displayAccountDetails(currentAccount);  // Update account details in the UI
                 messagesArea.setText("Deposit successful.");
             }
         } catch (NumberFormatException e) {
             messagesArea.setText("Invalid deposit amount. Please enter a valid number.");
         }
     }
-    
+
+    /**
+     * Applies monthly interest to the current account and updates the UI with the new balance.
+     */
     @FXML
     private void handleApplyMonthlyInterestButton() {
-        // Apply monthly interest to the current account based on currentAccountIndex
         Account currentAccount = currentCustomer.getAccounts().get(currentAccountIndex);
-
-        // Apply monthly interest to the correct account
-        currentAccount.applyMonthlyInterest();
-
-        // Update the account details in the UI with the correct account
-        displayAccountDetails(currentAccount);
-
-        // Display success message
+        currentAccount.applyMonthlyInterest();  // Apply interest to the current account
+        displayAccountDetails(currentAccount);  // Update the account details
         messagesArea.setText("Monthly interest applied successfully.");
     }
-    
+
+    /**
+     * Generates a report for all customers and their accounts.
+     */
     @FXML
     private void handleGenerateReportsButton() {
         customerList.generateReports();
         messagesArea.setText("Report generated successfully.");
     }
 
-    // Handle Exit button
+    /**
+     * Handles the exit action and closes the application window.
+     */
     @FXML
     private void handleExitButton() {
         Stage stage = (Stage) exitButton.getScene().getWindow();
         stage.close();
     }
 
-    // Handle button clicks (e.g., deposit, withdraw, next, previous)
+    /**
+     * Handles generic button clicks, used for under-development features.
+     */
     @FXML
     private void handleButtonClicked() {
         Button clickedButton = (Button) exitButton.getScene().getFocusOwner();

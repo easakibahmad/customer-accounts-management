@@ -1,12 +1,24 @@
 package com.mycompany.customeraccountsmanagement;
 
+/**
+ * The GoalSaverAccount class represents a goal saver bank account.
+ * It extends the abstract Account class and provides implementations
+ * for balance management, deposits, withdrawals, and monthly interest application.
+ */
 public class GoalSaverAccount extends Account {
     // Instance variables
-    private double balance;
-    private double startOfMonthBalance;
-    private double interestEarned;
+    private double balance;  // Current balance of the account
+    private double startOfMonthBalance;  // Balance at the start of the month
+    private double interestEarned;  // Interest earned during the last interest application
 
-    // Constructor
+    /**
+     * Constructor to initialize a Goal Saver account with an initial balance.
+     *
+     * @param id      Unique account ID
+     * @param custId  Customer ID owning the account
+     * @param rate    Monthly interest rate
+     * @param balance Initial account balance
+     */
     public GoalSaverAccount(String id, String custId, double rate, double balance) {
         super(id, custId, "Goal Saver", rate);  // Call the constructor of the superclass (Account)
         this.balance = balance;
@@ -14,6 +26,11 @@ public class GoalSaverAccount extends Account {
         this.interestEarned = 0.0;  // Default interest earned is 0
     }
 
+    /**
+     * Returns the account details as a string.
+     *
+     * @return a string representation of the goal saver account details
+     */
     @Override
     public String getAccountDetails() {
         StringBuilder sb = new StringBuilder();
@@ -27,7 +44,11 @@ public class GoalSaverAccount extends Account {
         return sb.toString();
     }
 
-    // Implement applyMonthlyInterest() method
+    /**
+     * Applies monthly interest to the account balance if the current balance
+     * is at least $500 more than the start of month balance.
+     * Updates the interest earned and the balance.
+     */
     @Override
     public void applyMonthlyInterest() {
         // Check if balance is greater than or equal to startOfMonthBalance + 500
@@ -43,7 +64,11 @@ public class GoalSaverAccount extends Account {
         startOfMonthBalance = balance;
     }
     
-    // Deposit money into the account
+    /**
+     * Deposits a specified amount into the account.
+     *
+     * @param amount the amount to be deposited
+     */
     @Override
     public void deposit(double amount) {
         if (amount > 0) {
@@ -54,7 +79,11 @@ public class GoalSaverAccount extends Account {
         }
     }
 
-    // Withdraw money from the account (ensure no overdrawing)
+    /**
+     * Withdraws a specified amount from the account if sufficient balance exists.
+     *
+     * @param amount the amount to be withdrawn
+     */
     @Override
     public void withdraw(double amount) {
         if (amount > 0 && balance >= amount) {
@@ -67,11 +96,16 @@ public class GoalSaverAccount extends Account {
         }
     }
     
+    /**
+     * Returns account details formatted for report generation.
+     *
+     * @return a string representation of the account details for reports
+     */
     @Override
     public String getAccountDetailsForReport() {
         StringBuilder sb = new StringBuilder();
 
-        // Add specific goal saver account details
+        // Add specific goal saver account details for report
         sb.append(String.format("Account Balance: $%.2f%n", balance));
         sb.append(String.format("Balance at start of month: $%.2f%n", startOfMonthBalance));
         sb.append(String.format("Last Interest Earned: $%.2f%n", interestEarned));
